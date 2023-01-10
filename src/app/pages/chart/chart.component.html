@@ -1,1 +1,19 @@
-<p>chart works!</p>
+<div class="row">
+  <div class="col-6">
+    <app-donut [title]="'Sales'" [labels]="labels1" [data]="data1"></app-donut>
+  </div>
+
+  <div class="col-6">
+    <app-donut [title]="'Marketing'"></app-donut>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-6">
+    <app-donut [title]="'Social Media'"></app-donut>
+  </div>
+
+  <div class="col-6">
+    <app-donut [title]="'Downloads'"></app-donut>
+  </div>
+</div>

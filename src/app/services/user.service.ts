@@ -15,6 +15,8 @@ const googleApiKey = environment.googleApiKey;
   providedIn: 'root',
 })
 export class UserService {
+  private googleUser: string = '';
+
   constructor(
     private http: HttpClient,
     private router: Router,
@@ -31,7 +33,6 @@ export class UserService {
   }
 
   handleCredentialResponse(response: any): void {
-    console.log(response);
     this.loginGoogle(response.credential).subscribe({
       next: () => {
         this.ngZone.run(() => {
@@ -72,18 +73,26 @@ export class UserService {
     );
   }
 
-  loginGoogle(token: string) {
+  loginGoogle(token: string): Observable<Object> {
     return this.http.post(`${base_url}/login/google`, { token }).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
+      tap(({ token, email }: any) => {
+        localStorage.setItem('token', token);
+        this.googleUser = email;
       })
     );
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    this.router.navigateByUrl('/login');
 
-    google.accounts.id.revoke('email', () => {
+    if (this.googleUser) {
+      this.logoutGoogle();
+    }
+  }
+
+  logoutGoogle(): void {
+    google.accounts.id.revoke(this.googleUser, () => {
       this.ngZone.run(() => {
         this.router.navigateByUrl('/login');
       });

@@ -44,6 +44,7 @@
   height: 100%;
 }
 
-#themecolors .selector {
+#themecolors .selector,
+.cursor-pointer {
   cursor: pointer;
 }

@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 
 import { RegisterForm } from 'src/app/interfaces/register-form.interface';
 import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,11 @@ export class RegisterComponent {
     } as AbstractControlOptions
   );
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   createUser(): void {
     if (this.registerForm.invalid) {
@@ -44,8 +49,8 @@ export class RegisterComponent {
       .createUser(this.registerForm.value as RegisterForm)
       .pipe(first())
       .subscribe({
-        next: (data) => {
-          console.log(data);
+        next: () => {
+          this.router.navigate(['/']);
         },
         error: (err) => {
           Swal.fire('Error', err.error.msg, 'error');

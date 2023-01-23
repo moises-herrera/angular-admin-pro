@@ -6,6 +6,7 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { ChartComponent } from './chart/chart.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PagesComponent } from './pages.component';
+import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
@@ -38,6 +39,11 @@ const routes: Routes = [
         data: { title: 'Promises' },
       },
       { path: 'rxjs', component: RxjsComponent, data: { title: 'RxJs' } },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: { title: 'User profile' },
+      },
     ],
   },
 ];

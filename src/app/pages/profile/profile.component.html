@@ -1,0 +1,78 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">My Profile</h4>
+        <h6 class="card-subtitle">Settings</h6>
+
+        <form
+          class="form p-t-20"
+          [formGroup]="profileForm"
+          (ngSubmit)="updateProfile()"
+        >
+          <div class="form-group">
+            <label for="exampleInputuname">User Name</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-user"></i></div>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputuname"
+                formControlName="name"
+                placeholder="Username"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <div class="input-group">
+              <div class="input-group-addon"><i class="ti-email"></i></div>
+              <input
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                formControlName="email"
+                [readOnly]="user.google"
+                placeholder="Enter email"
+              />
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-success btn-block waves-effect waves-light m-r-10"
+            [disabled]="profileForm.invalid"
+          >
+            <i class="fa fa-save"></i> Save changes
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Avatar</h4>
+        <h6 class="card-subtitle">User image</h6>
+
+        <div class="text-center">
+          <img *ngIf="!imagePreview" [src]="user.imageUrl" class="img-avatar" alt="user-image" />
+          <img *ngIf="imagePreview" [src]="imagePreview" class="img-avatar" alt="user-image" />
+        </div>
+        <input type="file" (change)="changeImage($event.target)" />
+
+        <br />
+        <br />
+
+        <button
+          type="submit"
+          class="btn btn-success btn-block waves-effect waves-light m-r-10"
+          [disabled]="!profileImage"
+          (click)="uploadImage()"
+        >
+          <i class="fa fa-save"></i> Change image
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

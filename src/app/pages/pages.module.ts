@@ -12,7 +12,8 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UsersComponent } from './management/users/users.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     PromisesComponent,
     RxjsComponent,
     ProfileComponent,
+    UsersComponent,
   ],
   exports: [
     DashboardComponent,
@@ -37,6 +39,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterModule,
     SharedModule,
     ComponentsModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
 })

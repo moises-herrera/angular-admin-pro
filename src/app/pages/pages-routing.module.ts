@@ -5,6 +5,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { ChartComponent } from './chart/chart.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsersComponent } from './management/users/users.component';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
@@ -43,6 +44,11 @@ const routes: Routes = [
         path: 'profile',
         component: ProfileComponent,
         data: { title: 'User profile' },
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        data: { title: 'Users' },
       },
     ],
   },

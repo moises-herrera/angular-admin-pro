@@ -1,0 +1,65 @@
+<div
+  class="container-modal-image animated fadeIn fast"
+  [ngClass]="{ hidden: !displayModal }"
+>
+  <div
+    id="responsive-modal"
+    class="modal fade show d-block"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="myModalLabel"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Upload image</h4>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-hidden="true"
+            (click)="closeModal()"
+          >
+            ×
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3>Select an image</h3>
+
+          <div class="text-center">
+            <img
+              *ngIf="!imagePreview"
+              [src]="imageUrl"
+              class="img-avatar"
+              alt="user-image"
+            />
+            <img
+              *ngIf="imagePreview"
+              [src]="imagePreview"
+              class="img-avatar"
+              alt="user-image"
+            />
+          </div>
+          <input type="file" (change)="changeImage($event.target)" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-default waves-effect"
+            data-dismiss="modal"
+            (click)="closeModal()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger waves-effect waves-light"
+            (click)="uploadImage()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,11 +6,14 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { ChartComponent } from './chart/chart.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './management/users/users.component';
+import { DoctorsComponent } from './management/doctors/doctors.component';
+import { HospitalsComponent } from './management/hospitals/hospitals.component';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { DoctorComponent } from './management/doctors/doctor/doctor.component';
 
 const routes: Routes = [
   {
@@ -49,6 +52,21 @@ const routes: Routes = [
         path: 'users',
         component: UsersComponent,
         data: { title: 'Users' },
+      },
+      {
+        path: 'hospitals',
+        component: HospitalsComponent,
+        data: { title: 'Hospitals' },
+      },
+      {
+        path: 'doctors',
+        component: DoctorsComponent,
+        data: { title: 'Doctors' },
+      },
+      {
+        path: 'doctor/:id',
+        component: DoctorComponent,
+        data: { title: 'Doctor' },
       },
     ],
   },

@@ -14,6 +14,10 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { ProfileComponent } from './profile/profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UsersComponent } from './management/users/users.component';
+import { HospitalsComponent } from './management/hospitals/hospitals.component';
+import { DoctorsComponent } from './management/doctors/doctors.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { DoctorComponent } from './management/doctors/doctor/doctor.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,9 @@ import { UsersComponent } from './management/users/users.component';
     RxjsComponent,
     ProfileComponent,
     UsersComponent,
+    HospitalsComponent,
+    DoctorsComponent,
+    DoctorComponent,
   ],
   exports: [
     DashboardComponent,
@@ -41,6 +48,7 @@ import { UsersComponent } from './management/users/users.component';
     ComponentsModule,
     FormsModule,
     ReactiveFormsModule,
+    PipesModule
   ],
 })
 export class PagesModule {}

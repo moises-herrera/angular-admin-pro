@@ -30,6 +30,11 @@ export class SearchService {
     );
   }
 
+  searchGlobal(term: string) {
+    const url = `${base_url}/all/${term}`;
+    return this.http.get(url, { headers: this.headers });
+  }
+
   search(type: Collection, term: string): Observable<User[] | Hospital[]> {
     const url = `${base_url}/all/collection/${type}/${term}`;
     return this.http
@@ -46,8 +51,6 @@ export class SearchService {
             case 'doctors':
               return results as Doctor[];
           }
-
-          return [];
         })
       );
   }

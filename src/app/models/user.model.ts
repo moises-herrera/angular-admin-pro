@@ -1,4 +1,5 @@
 import { environment } from 'src/environments/environment';
+import { Role } from '../interfaces/types/role.type';
 
 const base_url = environment.base_url;
 
@@ -8,7 +9,7 @@ export class User {
     public email: string,
     public google: boolean,
     public img: string,
-    public role?: string,
+    public role: Role,
     public uid?: string,
     public password?: string
   ) {}

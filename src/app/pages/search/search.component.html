@@ -1,0 +1,125 @@
+<div class="row animated fadeIn fast">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Users</h3>
+
+        <div
+          *ngIf="users.length === 0; else usersTable"
+          class="alert alert-info"
+        >
+          <p class="mb-0">There are no users that match with the term.</p>
+        </div>
+
+        <ng-template #usersTable>
+          <div class="table-responsive animated fadeIn fast">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Avatar</th>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of users">
+                  <td>
+                    <img
+                      [src]="user.img | image : 'users'"
+                      [alt]="user.name"
+                      class="w-75"
+                    />
+                  </td>
+                  <td>{{ user.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Doctors</h3>
+
+        <div
+          *ngIf="doctors.length === 0; else doctorsTable"
+          class="alert alert-info"
+        >
+          <p class="mb-0">There are no doctors that match with the term.</p>
+        </div>
+
+        <ng-template #doctorsTable>
+          <div class="table-responsive animated fadeIn fast">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Doctor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let doctor of doctors">
+                  <td>
+                    <img
+                      [src]="doctor.img || '' | image : 'doctors'"
+                      [alt]="doctor.name"
+                      class="w-75"
+                    />
+                  </td>
+                  <td>
+                    <a [routerLink]="['/dashboard', 'doctor', doctor._id]">{{
+                      doctor.name
+                    }}</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3>Hospitals</h3>
+
+        <div
+          *ngIf="hospitals.length === 0; else hospitalsTable"
+          class="alert alert-info"
+        >
+          <p class="mb-0">There are no hospitals that match with the term.</p>
+        </div>
+
+        <ng-template #hospitalsTable>
+          <div class="table-responsive animated fadeIn fast">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Name</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let hospital of hospitals">
+                  <td>
+                    <img
+                      [src]="hospital.img || '' | image : 'hospitals'"
+                      [alt]="hospital.name"
+                      class="w-75"
+                    />
+                  </td>
+                  <td>{{ hospital.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

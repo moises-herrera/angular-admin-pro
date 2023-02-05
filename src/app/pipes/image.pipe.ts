@@ -9,7 +9,7 @@ const base_url = environment.base_url;
 })
 export class ImagePipe implements PipeTransform {
   transform(imageUrl: string, type: Collection): string {
-    if (imageUrl.includes('https')) return imageUrl;
+    if (imageUrl?.includes('https')) return imageUrl;
 
     if (imageUrl) {
       return `${base_url}/upload/${type}/${imageUrl}`;

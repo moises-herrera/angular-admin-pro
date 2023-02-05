@@ -5,8 +5,10 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { LoadUsers } from '../interfaces/load-users.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
+import { MenuItem } from '../interfaces/menu-item.interface';
 import { ProfileData } from '../interfaces/profile-data.interface';
 import { RegisterForm } from '../interfaces/register-form.interface';
+import { Role } from '../interfaces/types/role.type';
 import { User } from '../models/user.model';
 
 declare const google: any;
@@ -34,12 +36,26 @@ export class UserService {
     return localStorage.getItem('token') || '';
   }
 
+  get role(): Role {
+    return this.user.role;
+  }
+
   get uid(): string {
     return this.user.uid || '';
   }
 
   get headers(): HttpHeaders {
     return new HttpHeaders().set('x-token', this.token);
+  }
+
+  setLocalStorageInfo(token: string, menu: MenuItem[]): void {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
+  removeLocalStorageInfo(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('menu');
   }
 
   googleInit(): void {
@@ -63,19 +79,25 @@ export class UserService {
     return this.http
       .get(`${base_url}/login/renew`, { headers: this.headers })
       .pipe(
-        map(({ token, user: { name, email, role, google, img, uid } }: any) => {
-          this.user = new User(name, email, google, img, role, uid);
-          localStorage.setItem('token', token);
-          return true;
-        }),
+        map(
+          ({
+            token,
+            menu,
+            user: { name, email, role, google, img, uid },
+          }: any) => {
+            this.user = new User(name, email, google, img, role, uid);
+            this.setLocalStorageInfo(token, menu);
+            return true;
+          }
+        ),
         catchError(() => of(false))
       );
   }
 
   createUser(formData: RegisterForm): Observable<Object> {
     return this.http.post(`${base_url}/users`, formData).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
+      tap(({ token, menu }: any) => {
+        this.setLocalStorageInfo(token, menu);
       })
     );
   }
@@ -88,22 +110,22 @@ export class UserService {
 
   login(formData: LoginForm): Observable<Object> {
     return this.http.post(`${base_url}/login`, formData).pipe(
-      tap((res: any) => {
-        localStorage.setItem('token', res.token);
+      tap(({ token, menu }: any) => {
+        this.setLocalStorageInfo(token, menu);
       })
     );
   }
 
   loginGoogle(token: string): Observable<Object> {
     return this.http.post(`${base_url}/login/google`, { token }).pipe(
-      tap(({ token }: any) => {
-        localStorage.setItem('token', token);
+      tap(({ token, menu }: any) => {
+        this.setLocalStorageInfo(token, menu);
       })
     );
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    this.removeLocalStorageInfo();
 
     if (this.user.google) {
       this.logoutGoogle();

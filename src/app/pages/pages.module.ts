@@ -18,6 +18,7 @@ import { HospitalsComponent } from './management/hospitals/hospitals.component';
 import { DoctorsComponent } from './management/doctors/doctors.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { DoctorComponent } from './management/doctors/doctor/doctor.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { DoctorComponent } from './management/doctors/doctor/doctor.component';
     HospitalsComponent,
     DoctorsComponent,
     DoctorComponent,
+    SearchComponent,
   ],
   exports: [
     DashboardComponent,

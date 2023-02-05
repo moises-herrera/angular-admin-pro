@@ -14,6 +14,8 @@ import { ProgressComponent } from './progress/progress.component';
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { DoctorComponent } from './management/doctors/doctor/doctor.component';
+import { SearchComponent } from './search/search.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -38,6 +40,11 @@ const routes: Routes = [
         data: { title: 'Account Settings' },
       },
       {
+        path: 'search/:term',
+        component: SearchComponent,
+        data: { title: 'Search' },
+      },
+      {
         path: 'promises',
         component: PromisesComponent,
         data: { title: 'Promises' },
@@ -52,6 +59,7 @@ const routes: Routes = [
         path: 'users',
         component: UsersComponent,
         data: { title: 'Users' },
+        canActivate: [AdminGuard],
       },
       {
         path: 'hospitals',

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay, first, Subject, takeUntil } from 'rxjs';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/interfaces/user.model';
 
 import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';

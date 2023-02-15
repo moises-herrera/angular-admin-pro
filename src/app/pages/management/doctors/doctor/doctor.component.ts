@@ -10,8 +10,7 @@ import {
   switchMap,
   takeUntil,
 } from 'rxjs';
-import { Doctor } from 'src/app/models/doctor.model';
-import { Hospital } from 'src/app/models/hospital.model';
+import { Doctor, Hospital } from 'src/app/models';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { HospitalService } from 'src/app/services/hospital.service';
 import Swal from 'sweetalert2';

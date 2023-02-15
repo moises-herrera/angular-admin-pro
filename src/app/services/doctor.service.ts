@@ -2,8 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoadDoctors } from '../interfaces/load-doctors.interface';
-import { Doctor } from '../models/doctor.model';
+import {
+  Doctor,
+  DoctorResponse,
+  LoadDoctorsResponse,
+  StandardResponse,
+} from 'src/app/models';
 
 const base_url = environment.base_url;
 
@@ -24,29 +28,33 @@ export class DoctorService {
   loadDoctors(): Observable<Doctor[]> {
     const url = `${base_url}/doctors`;
     return this.http
-      .get<LoadDoctors>(url, { headers: this.headers })
+      .get<LoadDoctorsResponse>(url, { headers: this.headers })
       .pipe(map(({ doctors }) => doctors));
   }
 
-  getDoctorById(id: string) {
+  getDoctorById(id: string): Observable<Doctor> {
     const url = `${base_url}/doctors/${id}`;
     return this.http
-      .get(url, { headers: this.headers })
-      .pipe(map(({ doctor }: any) => doctor));
+      .get<DoctorResponse>(url, { headers: this.headers })
+      .pipe(map(({ doctor }) => doctor));
   }
 
-  createDoctor(doctor: Doctor) {
+  createDoctor(doctor: Doctor): Observable<DoctorResponse> {
     const url = `${base_url}/doctors`;
-    return this.http.post(url, doctor, { headers: this.headers });
+    return this.http.post<DoctorResponse>(url, doctor, {
+      headers: this.headers,
+    });
   }
 
-  updateDoctor(doctor: Doctor) {
+  updateDoctor(doctor: Doctor): Observable<DoctorResponse> {
     const url = `${base_url}/doctors/${doctor._id}`;
-    return this.http.put(url, doctor, { headers: this.headers });
+    return this.http.put<DoctorResponse>(url, doctor, {
+      headers: this.headers,
+    });
   }
 
-  deleteDoctor(_id: string) {
+  deleteDoctor(_id: string): Observable<StandardResponse> {
     const url = `${base_url}/doctors/${_id}`;
-    return this.http.delete(url, { headers: this.headers });
+    return this.http.delete<StandardResponse>(url, { headers: this.headers });
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay, first, Subject, takeUntil } from 'rxjs';
-import { Hospital } from 'src/app/models/hospital.model';
+import { Hospital } from 'src/app/models';
 import { HospitalService } from 'src/app/services/hospital.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -105,7 +105,7 @@ export class HospitalsComponent implements OnInit, OnDestroy {
         .createHospital(value)
         .pipe(first())
         .subscribe({
-          next: ({ hospital }: any) => {
+          next: ({ hospital }) => {
             this.hospitals.push(hospital);
           },
           error: () => {

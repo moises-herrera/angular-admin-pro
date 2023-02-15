@@ -2,10 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Collection } from '../interfaces/types/collection.type';
-import { Doctor } from '../models/doctor.model';
-import { Hospital } from '../models/hospital.model';
-import { User } from '../models/user.model';
+import {
+  Collection,
+  CollectionSearchResponse,
+  Doctor,
+  GlobalSearchResponse,
+  Hospital,
+  User,
+} from 'src/app/models';
 
 const base_url = environment.base_url;
 
@@ -23,27 +27,23 @@ export class SearchService {
     return new HttpHeaders().set('x-token', this.token);
   }
 
-  private parseUsers(results: any[]): User[] {
-    return results.map(
-      ({ name, email, google, img, role, uid }) =>
-        new User(name, email, google, img, role, uid)
-    );
-  }
-
-  searchGlobal(term: string) {
+  searchGlobal(term: string): Observable<GlobalSearchResponse> {
     const url = `${base_url}/all/${term}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get<GlobalSearchResponse>(url, { headers: this.headers });
   }
 
-  search(type: Collection, term: string): Observable<User[] | Hospital[]> {
+  search(
+    type: Collection,
+    term: string
+  ): Observable<User[] | Hospital[] | Doctor[]> {
     const url = `${base_url}/all/collection/${type}/${term}`;
     return this.http
-      .get<User[] | Hospital[]>(url, { headers: this.headers })
+      .get<CollectionSearchResponse>(url, { headers: this.headers })
       .pipe(
-        map(({ results }: any) => {
+        map(({ results }) => {
           switch (type) {
             case 'users':
-              return this.parseUsers(results);
+              return results as User[];
 
             case 'hospitals':
               return results as Hospital[];

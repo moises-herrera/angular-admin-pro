@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { delay, first, Subject, takeUntil } from 'rxjs';
-import { Doctor } from 'src/app/models/doctor.model';
+import { Doctor } from 'src/app/models';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { SearchService } from 'src/app/services/search.service';

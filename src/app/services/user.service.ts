@@ -3,13 +3,18 @@ import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoadUsers } from '../interfaces/load-users.interface';
-import { LoginForm } from '../interfaces/login-form.interface';
-import { MenuItem } from '../interfaces/menu-item.interface';
-import { ProfileData } from '../interfaces/profile-data.interface';
-import { RegisterForm } from '../interfaces/register-form.interface';
-import { Role } from '../interfaces/types/role.type';
-import { User } from '../models/user.model';
+import {
+  User,
+  MenuItem,
+  LoginRenewResponse,
+  RegisterForm,
+  ProfileData,
+  LoginForm,
+  LoginResponse,
+  LoadUsersResponse,
+  StandardResponse,
+  Role,
+} from 'src/app/models';
 
 declare const google: any;
 
@@ -77,51 +82,51 @@ export class UserService {
 
   validateToken(): Observable<boolean> {
     return this.http
-      .get(`${base_url}/login/renew`, { headers: this.headers })
+      .get<LoginRenewResponse>(`${base_url}/login/renew`, {
+        headers: this.headers,
+      })
       .pipe(
-        map(
-          ({
-            token,
-            menu,
-            user: { name, email, role, google, img, uid },
-          }: any) => {
-            this.user = new User(name, email, google, img, role, uid);
-            this.setLocalStorageInfo(token, menu);
-            return true;
-          }
-        ),
+        map(({ token, menu, user }) => {
+          this.user = user;
+          this.setLocalStorageInfo(token, menu);
+          return true;
+        }),
         catchError(() => of(false))
       );
   }
 
-  createUser(formData: RegisterForm): Observable<Object> {
-    return this.http.post(`${base_url}/users`, formData).pipe(
-      tap(({ token, menu }: any) => {
-        this.setLocalStorageInfo(token, menu);
-      })
-    );
+  createUser(formData: RegisterForm): Observable<LoginRenewResponse> {
+    return this.http
+      .post<LoginRenewResponse>(`${base_url}/users`, formData)
+      .pipe(
+        tap(({ token, menu }) => {
+          this.setLocalStorageInfo(token, menu);
+        })
+      );
   }
 
-  updateProfile(data: ProfileData): Observable<Object> {
-    return this.http.put(`${base_url}/users/${this.uid}`, data, {
+  updateProfile(data: ProfileData): Observable<User> {
+    return this.http.put<User>(`${base_url}/users/${this.uid}`, data, {
       headers: this.headers,
     });
   }
 
-  login(formData: LoginForm): Observable<Object> {
-    return this.http.post(`${base_url}/login`, formData).pipe(
-      tap(({ token, menu }: any) => {
+  login(formData: LoginForm): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${base_url}/login`, formData).pipe(
+      tap(({ token, menu }) => {
         this.setLocalStorageInfo(token, menu);
       })
     );
   }
 
-  loginGoogle(token: string): Observable<Object> {
-    return this.http.post(`${base_url}/login/google`, { token }).pipe(
-      tap(({ token, menu }: any) => {
-        this.setLocalStorageInfo(token, menu);
-      })
-    );
+  loginGoogle(token: string): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${base_url}/login/google`, { token })
+      .pipe(
+        tap(({ token, menu }) => {
+          this.setLocalStorageInfo(token, menu);
+        })
+      );
   }
 
   logout(): void {
@@ -142,34 +147,23 @@ export class UserService {
     });
   }
 
-  loadUsers(from: number = 0): Observable<LoadUsers> {
+  loadUsers(from: number = 0): Observable<LoadUsersResponse> {
     const url = `${base_url}/users`;
     const params = new HttpParams().set('from', from);
-    return this.http
-      .get<LoadUsers>(url, { headers: this.headers, params })
-      .pipe(
-        map(({ total, users }) => {
-          const mappedUsers = users.map(
-            ({ name, email, google, img, role, uid }) =>
-              new User(name, email, google, img, role, uid)
-          );
-
-          return {
-            total,
-            users: mappedUsers,
-          };
-        })
-      );
+    return this.http.get<LoadUsersResponse>(url, {
+      headers: this.headers,
+      params,
+    });
   }
 
-  updateUser(user: User): Observable<Object> {
-    return this.http.put(`${base_url}/users/${user.uid}`, user, {
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${base_url}/users/${user.uid}`, user, {
       headers: this.headers,
     });
   }
 
-  deleteUser(userId: string): Observable<Object> {
+  deleteUser(userId: string): Observable<StandardResponse> {
     const url = `${base_url}/users/${userId}`;
-    return this.http.delete(url, { headers: this.headers });
+    return this.http.delete<StandardResponse>(url, { headers: this.headers });
   }
 }

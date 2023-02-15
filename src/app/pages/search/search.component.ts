@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, switchMap, takeUntil } from 'rxjs';
-import { Doctor } from 'src/app/models/doctor.model';
-import { Hospital } from 'src/app/models/hospital.model';
-import { User } from 'src/app/models/user.model';
+import { Doctor, User, Hospital } from 'src/app/models';
 import { SearchService } from 'src/app/services/search.service';
 
 @Component({
@@ -11,7 +9,7 @@ import { SearchService } from 'src/app/services/search.service';
   templateUrl: './search.component.html',
   styles: [],
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   private destroyed$ = new Subject<void>();
 
   public users: User[] = [];
@@ -33,10 +31,15 @@ export class SearchComponent implements OnInit {
         switchMap(({ term }) => this.searchService.searchGlobal(term)),
         takeUntil(this.destroyed$)
       )
-      .subscribe(({ users, doctors, hospitals }: any) => {
+      .subscribe(({ users, doctors, hospitals }) => {
         this.users = users;
         this.doctors = doctors;
         this.hospitals = hospitals;
       });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 }

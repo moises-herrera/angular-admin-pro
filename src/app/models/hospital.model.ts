@@ -4,11 +4,9 @@ interface HospitalUser {
   img: string;
 }
 
-export class Hospital {
-  constructor(
-    public name: string,
-    public _id?: string,
-    public img?: string,
-    public user?: HospitalUser
-  ) {}
+export interface Hospital {
+  name: string;
+  _id?: string;
+  img?: string;
+  user?: HospitalUser;
 }

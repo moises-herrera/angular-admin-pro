@@ -2,8 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { LoadHospitals } from '../interfaces/load-hospitals.inerface';
-import { Hospital } from '../models/hospital.model';
+import {
+  Hospital,
+  LoadHospitalsResponse,
+  StandardResponse,
+  HospitalResponse
+} from 'src/app/models';
 
 const base_url = environment.base_url;
 
@@ -24,22 +28,30 @@ export class HospitalService {
   loadHospitals(): Observable<Hospital[]> {
     const url = `${base_url}/hospitals`;
     return this.http
-      .get<LoadHospitals>(url, { headers: this.headers })
+      .get<LoadHospitalsResponse>(url, { headers: this.headers })
       .pipe(map(({ hospitals }) => hospitals));
   }
 
-  createHospital(name: string) {
+  createHospital(name: string): Observable<HospitalResponse> {
     const url = `${base_url}/hospitals`;
-    return this.http.post(url, { name }, { headers: this.headers });
+    return this.http.post<HospitalResponse>(
+      url,
+      { name },
+      { headers: this.headers }
+    );
   }
 
-  updateHospital(_id: string, name: string) {
+  updateHospital(_id: string, name: string): Observable<HospitalResponse> {
     const url = `${base_url}/hospitals/${_id}`;
-    return this.http.put(url, { name }, { headers: this.headers });
+    return this.http.put<HospitalResponse>(
+      url,
+      { name },
+      { headers: this.headers }
+    );
   }
 
-  deleteHospital(_id: string) {
+  deleteHospital(_id: string): Observable<StandardResponse> {
     const url = `${base_url}/hospitals/${_id}`;
-    return this.http.delete(url, { headers: this.headers });
+    return this.http.delete<StandardResponse>(url, { headers: this.headers });
   }
 }

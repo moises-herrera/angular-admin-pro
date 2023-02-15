@@ -3,7 +3,7 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import Swal from 'sweetalert2';
-import { LoginForm } from 'src/app/interfaces/login-form.interface';
+import { LoginForm } from 'src/app/models';
 import { UserService } from 'src/app/services/user.service';
 
 declare const google: any;

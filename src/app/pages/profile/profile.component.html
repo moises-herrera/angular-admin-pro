@@ -56,7 +56,7 @@
         <h6 class="card-subtitle">User image</h6>
 
         <div class="text-center">
-          <img *ngIf="!imagePreview" [src]="user.imageUrl" class="img-avatar" alt="user-image" />
+          <img *ngIf="!imagePreview" [src]="user.img | image : 'users'" class="img-avatar" alt="user-image" />
           <img *ngIf="imagePreview" [src]="imagePreview" class="img-avatar" alt="user-image" />
         </div>
         <input type="file" (change)="changeImage($event.target)" />

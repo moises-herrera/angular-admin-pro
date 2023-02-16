@@ -8,7 +8,7 @@ import {
 import { first } from 'rxjs';
 import Swal from 'sweetalert2';
 
-import { RegisterForm } from 'src/app/interfaces/register-form.model';
+import { RegisterForm } from 'src/app/models';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 

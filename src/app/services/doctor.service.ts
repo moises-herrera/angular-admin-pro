@@ -39,11 +39,13 @@ export class DoctorService {
       .pipe(map(({ doctor }) => doctor));
   }
 
-  createDoctor(doctor: Doctor): Observable<DoctorResponse> {
+  createDoctor(doctor: Doctor): Observable<Doctor> {
     const url = `${base_url}/doctors`;
-    return this.http.post<DoctorResponse>(url, doctor, {
-      headers: this.headers,
-    });
+    return this.http
+      .post<DoctorResponse>(url, doctor, {
+        headers: this.headers,
+      })
+      .pipe(map(({ doctor }) => doctor));
   }
 
   updateDoctor(doctor: Doctor): Observable<DoctorResponse> {

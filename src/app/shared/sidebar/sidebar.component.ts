@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MenuItem } from 'src/app/interfaces/menu-item.model';
-import { User } from 'src/app/interfaces/user.model';
+import { MenuItem, User } from 'src/app/models';
 import { SidebarService } from 'src/app/services/sidebar.service';
 import { UserService } from 'src/app/services/user.service';
 

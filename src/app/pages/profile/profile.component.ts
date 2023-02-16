@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs';
 import Swal from 'sweetalert2';
 
-import { User } from 'src/app/interfaces/user.model';
+import { User } from 'src/app/models';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { UserService } from 'src/app/services/user.service';
 

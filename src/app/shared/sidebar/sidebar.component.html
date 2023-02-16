@@ -12,12 +12,15 @@
             class="has-arrow waves-effect waves-dark"
             href="#"
             aria-expanded="false"
-            ><img [src]="user.imageUrl" alt="user" /><span class="hide-menu"
+            ><img [src]="user.img | image : 'users'" alt="user" /><span
+              class="hide-menu"
               >{{ user.name }}
             </span></a
           >
           <ul aria-expanded="false" class="collapse">
-            <li><a routerLink="profile" routerLinkActive="active">My Profile </a></li>
+            <li>
+              <a routerLink="profile" routerLinkActive="active">My Profile </a>
+            </li>
             <li><a>My Balance</a></li>
             <li><a>Inbox</a></li>
             <li><a routerLink="account-settings">Account Setting</a></li>

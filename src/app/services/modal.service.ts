@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Collection } from '../interfaces/types/collection.type';
+import { Collection } from 'src/app/models';
 
 const base_url = environment.base_url;
 

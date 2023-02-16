@@ -53,11 +53,14 @@ export class DoctorComponent implements OnInit, OnDestroy {
             ? this.doctorService.getDoctorById(id).pipe(delay(100))
             : of(null)
         ),
-        catchError(() => this.router.navigateByUrl(`/dashboard/doctors`)),
+        catchError(() => {
+          this.router.navigateByUrl(`/dashboard/doctors`);
+          return of(null);
+        }),
         takeUntil(this.destroyed$)
       )
       .subscribe((doctor) => {
-        if (!doctor) return;
+        if (!doctor || !doctor.hospital) return;
         const {
           name,
           hospital: { _id },
@@ -109,8 +112,7 @@ export class DoctorComponent implements OnInit, OnDestroy {
         .createDoctor(this.doctorForm.value as Doctor)
         .pipe(first())
         .subscribe({
-          next: (data) => {
-            const doctor = data as Doctor;
+          next: (doctor) => {
             Swal.fire('Created', 'Doctor created successfully', 'success');
             this.router.navigateByUrl(`/dashboard/doctor/${doctor._id}`);
           },

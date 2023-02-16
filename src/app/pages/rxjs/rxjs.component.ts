@@ -20,7 +20,7 @@ export class RxjsComponent implements OnInit, OnDestroy {
     //     complete: () => console.info('Completed'),
     //   });
 
-    this.intervalSubs = this.getInterval().subscribe(console.log);
+    // this.intervalSubs = this.getInterval().subscribe(console.log);
   }
 
   getInterval(): Observable<number> {
